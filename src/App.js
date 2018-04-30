@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Link , Route} from 'react-router-dom'
+import { Route } from 'react-router-dom'
 import SearchPage from './SearchPage'
 import ListBook from './ListBook'
 import * as BooksAPI from './BooksAPI'
@@ -27,7 +27,12 @@ class BooksApp extends Component {
 
   searchBook(query) {
     BooksAPI.search(query).then((books) => {
-      this.setState({ result: books })
+      console.log('search', books)
+      if (books.item === 0) {
+        console.log(' empty array!')
+      } else {
+        this.setState({ result: books })
+      }
     })
   }
 
@@ -59,9 +64,10 @@ class BooksApp extends Component {
         onUpdateShelf={(book, shelf) => {
           this.updateShelf(book, shelf)
         }}
+        books={this.state.books}
         result={this.state.result}/>
     )} />
-      </div>
+</div>
     )
   }
 }
