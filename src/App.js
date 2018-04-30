@@ -42,18 +42,26 @@ class BooksApp extends Component {
   render() {
     return (
       <div className="app">
-        <Route exact path="/" component={ListBook}/>
-        <Route path="/search" render={() => ( 
-          <SearchPage 
-            onSearchBook={(query) => {
-              this.searchBook(query)
-            }}
+        <Route exact path="/" render={() => (
+          <ListBook books={this.state.books}
             onUpdateShelf={(book, shelf) => {
               this.updateShelf(book, shelf)
             }}
-            result={this.state.result}/>
-        )} />
-    </div>
+          />
+        )}
+      />
+
+    <Route path="/search" render={() => ( 
+      <SearchPage 
+        onSearchBook={(query) => {
+          this.searchBook(query)
+        }}
+        onUpdateShelf={(book, shelf) => {
+          this.updateShelf(book, shelf)
+        }}
+        result={this.state.result}/>
+    )} />
+      </div>
     )
   }
 }
