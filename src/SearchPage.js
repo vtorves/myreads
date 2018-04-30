@@ -6,6 +6,7 @@ class SearchPage extends Component {
 
   render() {
     const { result } = this.props
+    const {onSearchBook, onUpdateShelf } = this.props
 
     return (
       <div className="search-books">
@@ -23,7 +24,8 @@ class SearchPage extends Component {
                   However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
                   you don't find a specific author or title. Every search is limited by search terms.
                   */}
-                  <input type="text" placeholder="Search by title or author" onChange={(e) => { this.props.onSearchBook(e.target.value) }}/>
+
+                  <input type="text" placeholder="Search by title or author" onChange={(e) => { onSearchBook(e.target.value) }}/>
 
                 </div>
               </div>
@@ -36,7 +38,7 @@ class SearchPage extends Component {
                         <div className="book-top">
                           <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>
                           <div className="book-shelf-changer">
-                            <select>
+                            <select onChange={(event) => onUpdateShelf(event.target.id, event.target.value)} id={book.id} >
                               <option value="none" disabled>Move to...</option>
                               <option value="currentlyReading">Currently Reading</option>
                               <option value="wantToRead">Want to Read</option>
