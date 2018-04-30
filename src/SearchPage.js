@@ -1,13 +1,20 @@
 import React, { Component } from 'react'
-import ListBook from './ListBook'
 import { Link } from 'react-router-dom'
 
 class SearchPage extends Component {
 
+  checkSelectValue(id){
+    const filteredBooks = this.props.books.filter((book) => book.id === id && book.shelf)
+    if (filteredBooks[0] != undefined){
+      return filteredBooks[0].shelf
+    }
+  }
+
+
   render() {
     const { result } = this.props
-    const {onSearchBook, onUpdateShelf } = this.props
-
+    const { onSearchBook, onUpdateShelf } = this.props
+ console.log(result) 
     return (
       <div className="search-books">
         <div className="search-books-bar">
@@ -31,14 +38,14 @@ class SearchPage extends Component {
               </div>
               <div className="search-books-results">
                 <ol className="books-grid">
-                  { result && 
+                  { result !== undefined && 
                   (result.map((book) => (
                     <li key={book.id}>
                       <div className="book">
                         <div className="book-top">
                           <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>
                           <div className="book-shelf-changer">
-                            <select onChange={(event) => onUpdateShelf(event.target.id, event.target.value)} id={book.id} >
+                            <select value={this.checkSelectValue(book.id)} onChange={(event) => onUpdateShelf(event.target.id, event.target.value)} id={book.id} >
                               <option value="none" disabled>Move to...</option>
                               <option value="currentlyReading">Currently Reading</option>
                               <option value="wantToRead">Want to Read</option>
